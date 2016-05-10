@@ -67,6 +67,7 @@ public class MafijaKlijent {
 			
 				System.out.println();
 				if (!status) {
+					ulazOdServera.readLine();
 					System.out.println();
 				} else{
 				if (ulazOdServera.readLine().equals("izbacen")) {
