@@ -1,3 +1,7 @@
+import gui.GlavniProzor;
+import gui.PocetniProzor;
+import gui.ProzorZaKraj;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,107 +16,141 @@ public class MafijaKlijent {
 	static Socket soketZaKomunikaciju = null;
 	static BufferedReader ulazOdServera;
 	static PrintStream izlazKaServeru;
-	static BufferedReader ulazKonzola;
+	//oznacava da li je igrac i dalje u igri
 	static boolean status = true;
+	//oznaka za kraj partije
 	static boolean kraj = false;
+	//prozor za unosenje imena
+	static PocetniProzor pp;
+	//glavni prozor u kome se igra
+	static GlavniProzor gp;
+	//prozor za izbor nove partije ili kraj
+	static ProzorZaKraj pk;
 	
 	public static void main(String[] args) {
 		try {
 			soketZaKomunikaciju = new Socket("localhost", 2906);
 			ulazOdServera = new BufferedReader(new InputStreamReader(soketZaKomunikaciju.getInputStream()));
 			izlazKaServeru = new PrintStream(soketZaKomunikaciju.getOutputStream());
-			ulazKonzola = new BufferedReader(new InputStreamReader(System.in));
+		
+		//beskonacna petlja da bi mogla da se bira nova partija neogranicen br puta
+		while (true) {
+			pp = new PocetniProzor();
+			pp.setVisible(true);
 			
-			System.out.println("Dobrodosli! Unesite ime:");
-			izlazKaServeru.println(ulazKonzola.readLine());
-			
-			System.out.println("Sacekajte ostale igrace...");
-			System.out.println("Igraci su:");
-			for (int i = 0; i < 6; i++) {
-				System.out.println(ulazOdServera.readLine());
+			//ova petlja sluzi da zaustavi izvrsavanje dok igrac ne pritisne dugme za unos imena
+			while (!pp.flag) {
+				
 			}
+			//kada igrac pritisne dugme onda se uzima ime
+			izlazKaServeru.println(pp.vratiIme());
+			gp = new GlavniProzor();
+			gp.ime = pp.vratiIme();
 			
+			//dobijanje svih igraca od servera
+			String[] igraci = new String[6];
+			for (int i = 0; i < 6; i++) {
+				igraci[i] = ulazOdServera.readLine();
+			}
+			pp.dispose();
+			
+			gp.setVisible(true);
+			//ispisuje igrace u listu i dodaje njihova imena na radio button-e
+			gp.ispisiIgrace(igraci);
+			
+			//dobijanje uloge od servera
 			String uloga = ulazOdServera.readLine();
-			System.out.println("Vasa uloga je : "+ uloga);
+			gp.ispisiUlogu(uloga);
 			
-			System.out.println();
-			
+			//ova petlja se vrti dok god traje partija
 			while(!kraj) {
+			//ako igrac nije ubijen/izbacen
 			if(status) {
+			//pravi promene u glavnom prozoru u zavisnosti od uloge i salje serveru izbore
 			switch (uloga) {
 			case "Ubica":
-				System.out.println("Koga zelite da ubijete?");
-				izlazKaServeru.println(ulazKonzola.readLine());
+				gp.ulogaUbice();
+				while (!gp.ulogaFlag) {
+					
+				}
+				izlazKaServeru.println(gp.vratiIzborZaUlogu());
 				break;
 			case "Lekar":
-				System.out.println("Koga zelita da izlecite?");
-				izlazKaServeru.println(ulazKonzola.readLine());
+				gp.ulogaLekara();
+				while (!gp.ulogaFlag) {
+					
+				}
+				izlazKaServeru.println(gp.vratiIzborZaUlogu());
 				break;
 			case "Policajac":
-				System.out.println("Na koga sumnjate?");
-				izlazKaServeru.println(ulazKonzola.readLine());
-				System.out.println(ulazOdServera.readLine());
+				gp.ulogaPolicajca();
+				while (!gp.ulogaFlag) {
+					
+				}
+				izlazKaServeru.println(gp.vratiIzborZaUlogu());
+				gp.odgovoriPolicajcu(ulazOdServera.readLine());
 				break;
-				
+			default:
+				gp.ulogaGradjanina();
+				break;
 			}
 			}
-			System.out.println();
 			
-			System.out.println("Rezultat:");
-			for (int i = 0; i < 6; i++) {
-				System.out.println(ulazOdServera.readLine());
-			}
+			//obavestava da li je neko ubijen i menja sadrzaj prozora za glasanje i izbacuje iz izbora ubijenog
+			gp.obavesti(ulazOdServera.readLine());
 			
-			
-			
-				System.out.println();
+				//dobija poruku od servera da li je igrac izbacen/ubijen
 				if (!status) {
 					ulazOdServera.readLine();
-					System.out.println();
 				} else{
 				if (ulazOdServera.readLine().equals("izbacen")) {
-					System.out.println("Ispali ste iz igre!");
+					gp.obavestiOIspadanju();
 					status = false;
-				} else {
-					System.out.println("Jos ste u igri!");
-				}
+				} 
 				}
 				
+				//dobija poruku od servera da li je partija gotova
 				if (ulazOdServera.readLine().equals("kraj")) {
 					kraj = true;
 					continue;
 				}
 			
-			
-			if (status) {		
-				System.out.println();
-				System.out.println("Koga zelite da izbacite: ");
-				izlazKaServeru.println(ulazKonzola.readLine());
+			//salje serveru odgovor za izbacivanje
+			if (status) {
+				while (!gp.izbacivanjeFlag) {
+					
+				}
+				izlazKaServeru.println(gp.vratiIzborZaIzbacivanje());
 			}
 			
-			System.out.println();
-			System.out.println("Rezultati glasanja: ");
-			for (int i = 0; i < 6; i++) {
-				System.out.println(ulazOdServera.readLine());
-			}
+			//dobija odgovor ko je izbacen
+			gp.obavestiOIzglasavanju(ulazOdServera.readLine());
 			
-			
-				System.out.println();
+				//dobija poruku da li je igrac izbacen
 				if (ulazOdServera.readLine().equals("izbacen")) {
-					System.out.println("Ispali ste iz igre!");
+					gp.obavestiOIspadanju();
 					status = false;
-				} else {
-					System.out.println("Jos ste u igri!");
 				}
 			
-			
+			//dobija poruku da li je sad kraj partije
 			if (ulazOdServera.readLine().equals("kraj")) {
 				kraj = true;
 			}
+			//ako nije, sve ispocetka
 			}
-		  
 			
-			System.out.println("Kraj partije! Pobedili su " + ulazOdServera.readLine());
+			//ako jeste kraj partije, izbaci prozor za ponovno biranje partije
+			pk = new ProzorZaKraj();
+			pk.setVisible(true);
+			//ispisi ko je pobedio
+			pk.ispisi(ulazOdServera.readLine());
+			gp.dispose();
+			while (!pk.flag) {
+				
+			}
+			pk.flag = false;
+			pk.dispose();
+		}
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
