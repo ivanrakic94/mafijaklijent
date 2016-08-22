@@ -61,6 +61,7 @@ public class GlavniProzor extends JFrame {
 	public JTextArea chatTextArea;
 	private JLabel ispadanjeLabel;
 	public boolean izbacivanjeFlag = false;
+	public String uloga;
 
 
 	/**
@@ -252,7 +253,7 @@ public class GlavniProzor extends JFrame {
 		JScrollPane scrollPane_1 = new JScrollPane();
 		contentPane.add(scrollPane_1, "cell 2 1 1 2,grow");
 		
-		ubiceTextArea = new JTextArea();
+		ubiceTextArea = new JTextArea(2, 1);
 		ubiceTextArea.setEditable(false);
 		scrollPane_1.setViewportView(ubiceTextArea);
 		
@@ -274,6 +275,7 @@ public class GlavniProzor extends JFrame {
 	}
 	
 	public void ispisiUlogu(String uloga) {
+		this.uloga = uloga;
 		ulogaLbl.setText("Vaša uloga je: "+uloga);
 	}
 	
@@ -556,6 +558,12 @@ public class GlavniProzor extends JFrame {
 		
 		izbacivanjeBtn.setEnabled(false);
 		ulogaButton.setEnabled(true);
+	}
+	
+	public void ispisiUbice(String ub) {
+		if (uloga.equals("Ubica")) {
+			ubiceTextArea.append("Ubice su: "+ub);
+		}
 	}
 	
 }

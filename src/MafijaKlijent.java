@@ -62,6 +62,9 @@ public class MafijaKlijent {
 			String uloga = ulazOdServera.readLine();
 			gp.ispisiUlogu(uloga);
 			
+			String ubice = ulazOdServera.readLine();
+			gp.ispisiUbice(ubice);
+			
 			//ova petlja se vrti dok god traje partija
 			while(!kraj) {
 			//ako igrac nije ubijen/izbacen
