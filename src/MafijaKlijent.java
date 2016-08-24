@@ -40,7 +40,7 @@ public class MafijaKlijent {
 			
 			//ova petlja sluzi da zaustavi izvrsavanje dok igrac ne pritisne dugme za unos imena
 			while (!pp.flag) {
-				
+				System.out.println();
 			}
 			//kada igrac pritisne dugme onda se uzima ime
 			izlazKaServeru.println(pp.vratiIme());
@@ -74,21 +74,21 @@ public class MafijaKlijent {
 			case "Ubica":
 				gp.ulogaUbice();
 				while (!gp.ulogaFlag) {
-					
+					System.out.println();
 				}
 				izlazKaServeru.println(gp.vratiIzborZaUlogu());
 				break;
 			case "Lekar":
 				gp.ulogaLekara();
 				while (!gp.ulogaFlag) {
-					
+					System.out.println();
 				}
 				izlazKaServeru.println(gp.vratiIzborZaUlogu());
 				break;
 			case "Policajac":
 				gp.ulogaPolicajca();
 				while (!gp.ulogaFlag) {
-					
+					System.out.println();
 				}
 				izlazKaServeru.println(gp.vratiIzborZaUlogu());
 				gp.odgovoriPolicajcu(ulazOdServera.readLine());
@@ -121,7 +121,7 @@ public class MafijaKlijent {
 			//salje serveru odgovor za izbacivanje
 			if (status) {
 				while (!gp.izbacivanjeFlag) {
-					
+					System.out.println();
 				}
 				izlazKaServeru.println(gp.vratiIzborZaIzbacivanje());
 			}
@@ -149,7 +149,7 @@ public class MafijaKlijent {
 			pk.ispisi(ulazOdServera.readLine());
 			gp.dispose();
 			while (!pk.flag) {
-				
+				System.out.println();
 			}
 			pk.flag = false;
 			pk.dispose();
