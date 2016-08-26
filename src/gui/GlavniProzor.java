@@ -31,8 +31,8 @@ import java.awt.event.ActionEvent;
 public class GlavniProzor extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField chatTextField;
-	private JTextField ubiceTextField;
+	public JTextField chatTextField;
+	public JTextField ubiceTextField;
 	public JList igraciList;
 	public JLabel ulogaLbl;
 	public JLabel ulLbl;
@@ -61,6 +61,8 @@ public class GlavniProzor extends JFrame {
 	public JTextArea chatTextArea;
 	private JLabel ispadanjeLabel;
 	public boolean izbacivanjeFlag = false;
+	public boolean slanjePorukeFlag=false;
+	public boolean slanjePorukeUbicaFlag=false;
 	public String uloga;
 
 
@@ -121,6 +123,14 @@ public class GlavniProzor extends JFrame {
 		scrollPane.setViewportView(chatTextArea);
 		
 		chatTextField = new JTextField();
+		chatTextField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				slanjePorukeFlag=true;
+				
+				
+				
+			}
+		});
 		scrollPane.setColumnHeaderView(chatTextField);
 		chatTextField.setColumns(10);
 		
@@ -258,6 +268,14 @@ public class GlavniProzor extends JFrame {
 		scrollPane_1.setViewportView(ubiceTextArea);
 		
 		ubiceTextField = new JTextField();
+		ubiceTextField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ubiceTextField.setText("#*#"+ubiceTextField.getText());
+			    slanjePorukeUbicaFlag=true;
+			    
+				
+			}
+		});
 		scrollPane_1.setColumnHeaderView(ubiceTextField);
 		ubiceTextField.setColumns(10);
 	}

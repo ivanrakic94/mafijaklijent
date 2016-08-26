@@ -14,6 +14,7 @@ import java.net.UnknownHostException;
 public class MafijaKlijent {
 	
 	static Socket soketZaKomunikaciju = null;
+	static Socket soketZaKom=null;
 	static BufferedReader ulazOdServera;
 	static PrintStream izlazKaServeru;
 	//oznacava da li je igrac i dalje u igri
@@ -30,6 +31,7 @@ public class MafijaKlijent {
 	public static void main(String[] args) {
 		try {
 			soketZaKomunikaciju = new Socket("localhost", 2906);
+			soketZaKom=new Socket("localhost",2907);
 			ulazOdServera = new BufferedReader(new InputStreamReader(soketZaKomunikaciju.getInputStream()));
 			izlazKaServeru = new PrintStream(soketZaKomunikaciju.getOutputStream());
 		
@@ -45,6 +47,7 @@ public class MafijaKlijent {
 			//kada igrac pritisne dugme onda se uzima ime
 			izlazKaServeru.println(pp.vratiIme());
 			gp = new GlavniProzor();
+			
 			gp.ime = pp.vratiIme();
 			
 			//dobijanje svih igraca od servera
@@ -55,11 +58,15 @@ public class MafijaKlijent {
 			pp.dispose();
 			
 			gp.setVisible(true);
+		
+	
 			//ispisuje igrace u listu i dodaje njihova imena na radio button-e
 			gp.ispisiIgrace(igraci);
 			
 			//dobijanje uloge od servera
 			String uloga = ulazOdServera.readLine();
+			new Thread(new ChatNitZaSve(gp, pp.vratiIme(), soketZaKom,uloga)).start();
+			new Thread(new ChatNitZaSveSlanjePoruka(gp, pp.vratiIme(), soketZaKom)).start();
 			gp.ispisiUlogu(uloga);
 			
 			String ubice = ulazOdServera.readLine();
