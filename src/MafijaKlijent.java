@@ -29,14 +29,16 @@ public class MafijaKlijent {
 
 	public static void main(String[] args) {
 		try {
-			soketZaKomunikaciju = new Socket("localhost", 2906);
-			soketZaKom = new Socket("localhost", 2907);
-			ulazOdServera = new BufferedReader(new InputStreamReader(soketZaKomunikaciju.getInputStream()));
-			izlazKaServeru = new PrintStream(soketZaKomunikaciju.getOutputStream());
+			
 
 			// beskonacna petlja da bi mogla da se bira nova partija neogranicen
 			// br puta
 			while (true) {
+				soketZaKomunikaciju = new Socket("localhost", 2906);
+				soketZaKom = new Socket("localhost", 2907);
+				ulazOdServera = new BufferedReader(new InputStreamReader(soketZaKomunikaciju.getInputStream()));
+				izlazKaServeru = new PrintStream(soketZaKomunikaciju.getOutputStream());
+				
 				pp = new PocetniProzor();
 				pp.setVisible(true);
 				//vrti se u while dok se ne obavi proces registracije/logovanja
@@ -74,6 +76,8 @@ public class MafijaKlijent {
 
 					gp = new GlavniProzor();
 					gp.ime = username;
+					
+					
 				}
 				// dobijanje svih igraca od servera
 				String[] igraci = new String[6];
@@ -97,6 +101,8 @@ public class MafijaKlijent {
 				String ubice = ulazOdServera.readLine();
 				gp.ispisiUbice(ubice);
 
+				kraj = false;
+				status = true;
 				// ova petlja se vrti dok god traje partija
 				while (!kraj) {
 					// ako igrac nije ubijen/izbacen

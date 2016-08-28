@@ -313,6 +313,7 @@ public class GlavniProzor extends JFrame {
 		ulogaRadioButton4.setText(igraci[3]);
 		ulogaRadioButton5.setText(igraci[4]);
 		ulogaRadioButton6.setText(ime);
+		ulogaRadioButton6.setEnabled(false);
 		
 	}
 	
@@ -355,6 +356,7 @@ public class GlavniProzor extends JFrame {
 		ulogaRadioButton4.setText(igraci[3]);
 		ulogaRadioButton5.setText(igraci[4]);
 		ulogaRadioButton6.setText(ime);
+		ulogaRadioButton6.setEnabled(false);
 		
 	}
 	

@@ -108,7 +108,7 @@ public class PocetniProzor extends JFrame {
 		String pass = passwordField.getText();
 
 		// provera validnosti unetih podataka
-		if (ime != null && ime != "" && ime != " " && !ime.contains(";") && pass != null && pass != "" && pass != " "
+		if (ime != null && !ime.isEmpty() && ime != "" && ime != " " && !ime.contains(";") && pass != null && !pass.isEmpty() && pass != "" && pass != " "
 				&& !pass.contains(";")) {
 			return true;
 		}
