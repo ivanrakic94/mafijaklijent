@@ -1,18 +1,11 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicBorders.RadioButtonBorder;
-
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;

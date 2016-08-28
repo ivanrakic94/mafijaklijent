@@ -7,16 +7,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import java.awt.Frame;
-
 import javax.swing.JTextField;
-import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JToggleButton;
 import javax.swing.JRadioButton;
 
 public class PocetniProzor extends JFrame {
