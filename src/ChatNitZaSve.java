@@ -19,11 +19,13 @@ String uloga;
 
 
 
+
 public ChatNitZaSve(GlavniProzor gp, String ime, Socket Soket, String uloga) {
 	this.gp = gp;
 	this.ime=ime;
 	this.soketZaKom=Soket;
 	this.uloga=uloga;
+	
 }
 
 
