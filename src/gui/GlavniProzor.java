@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class GlavniProzor extends JFrame {
 
@@ -103,7 +104,8 @@ public class GlavniProzor extends JFrame {
 		panel.add(policajacLabel);
 		
 		ispadanjeLabel = new JLabel("");
-		ispadanjeLabel.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		ispadanjeLabel.setForeground(new Color(255, 0, 0));
+		ispadanjeLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		ispadanjeLabel.setBounds(219, 128, 183, 53);
 		panel.add(ispadanjeLabel);
 		
@@ -478,7 +480,7 @@ public class GlavniProzor extends JFrame {
 	}
 	
 	public void obavestiOIspadanju() {
-		ispadanjeLabel.setText("Ispali ste iz igre! Sacekajte kraj partije.");
+		ispadanjeLabel.setText("Ispali ste iz igre!");
 		ulogaButton.setEnabled(false);
 		izbacivanjeBtn.setEnabled(false);
 		chatTextArea.setEditable(false);
